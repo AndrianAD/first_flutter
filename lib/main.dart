@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'app_screen/first_screen.dart';
+
 void main() => runApp(MyFlutterApp());
 
 class MyFlutterApp extends StatelessWidget {
@@ -47,33 +49,37 @@ class _SIFormState extends State<SIForm> {
                                   decoration: InputDecoration(
                                       border: OutlineInputBorder(
                                           borderRadius:
-                                              BorderRadius.circular(20)),
+                                          BorderRadius.circular(20)),
                                       labelText: "Last Name"))),
                           Container(
                             width: 10,
                           ),
                           Expanded(
                               child: DropdownButton<String>(
-                            iconEnabledColor: Colors.purpleAccent,
-                            items: _currencies.map((String dropDownItem) {
-                              return DropdownMenuItem<String>(
-                                  value: dropDownItem,
-                                  child: Text(dropDownItem));
-                            }).toList(),
-                            onChanged: (String newValueSelected) {
-                              setState(() {
-                                this._currentSelectedItem = newValueSelected;
-                              });
-                            },
-                            value: _currentSelectedItem,
-                          ))
+                                iconEnabledColor: Colors.purpleAccent,
+                                items: _currencies.map((String dropDownItem) {
+                                  return DropdownMenuItem<String>(
+                                      value: dropDownItem,
+                                      child: Text(dropDownItem));
+                                }).toList(),
+                                onChanged: (String newValueSelected) {
+                                  setState(() {
+                                    this._currentSelectedItem =
+                                        newValueSelected;
+                                  });
+                                },
+                                value: _currentSelectedItem,
+                              ))
                         ],
                       ))
                 ],
               ),
             ),
             Row(
-              children: <Widget>[button("Ok"), button("Cancel")],
+              children: <Widget>[
+                button("Ok", (int x, int y) => x + y),
+                button("Cancel", (int x, int y) => x * y)
+              ],
             )
           ],
         ),
@@ -88,26 +94,27 @@ class _SIFormState extends State<SIForm> {
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
                 border:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+                OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
                 labelText: "$text")));
   }
 
-  Widget button(String text) {
+  Widget button(String text, Function(int, int ) f) {
     return Expanded(
         child: Padding(
             padding: EdgeInsets.all(10),
             child: RaisedButton(
-                    onPressed: () {
-//                  FirstScreen().someAction(context);
-                    },
-                    child: Text("$text"))));
+                onPressed: () {
+                  var text = f(5, 5);
+                  FirstScreen().someAction(context, text.toString());
+                },
+                child: Text("$text"))));
   }
 
   Widget getImageAsset() {
     AssetImage assetImage = AssetImage("images/foto.jpeg");
     Image image = Image(image: assetImage, width: 200, height: 120);
-    return  InkWell(
+    return InkWell(
         onTap: () => {},
-    child:Container(child: image, margin: EdgeInsets.all(20)));
+        child: Container(child: image, margin: EdgeInsets.all(20)));
   }
 }

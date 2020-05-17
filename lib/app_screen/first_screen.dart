@@ -8,9 +8,9 @@ class FirstScreen extends StatefulWidget {
     return _FirstScreenState();
   }
 
-  void someAction(BuildContext context) {
+  void someAction(BuildContext context, String message) {
     var alertDialog = AlertDialog(
-      title: Text("Alert Dialog"),
+      title: Text(message),
       content: Text("This is text message"),
     );
 
@@ -90,7 +90,7 @@ class Button extends StatelessWidget {
         color: Colors.purpleAccent,
         elevation: 6,
         onPressed: () {
-          FirstScreen().someAction(context);
+          FirstScreen().someAction(context,"some text");
         },
         child: Text("Click"),
       ),
